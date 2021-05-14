@@ -35,13 +35,19 @@ parts = []
 for i in range(real_files_len):
     with open(pathlist[i], 'r') as f:
         parts.append(json.load(f)['part'])
-print(parts)
+#print(parts)
 
 secret = 0
 for j in range(k):
     prod = 1
     for m in range(k):
         if m != j:
-            prod *= (m+1)/(m-j)
+            prod *= (m+1)/(j-m)
     secret += parts[j] * prod
-print(secret)
+
+with open('secret.json', 'w') as f:
+    data = {}
+    data['k'] = k
+    data['secret'] = secret
+    json.dump(data, f, indent = 4)
+
